@@ -25,3 +25,4 @@ ca
 *.njsproj
 *.sln
 *.sw?
+*.js

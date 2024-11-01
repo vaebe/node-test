@@ -4,6 +4,7 @@ import CpuMonitor from './data/cpu.js';
 import MemoryMonitor from './data/memory.js';
 import NetMonitor from './data/net.js';
 import DiskMonitor from './data/disk.js';
+import ProcessMonitor from './data/process.js';
 
 /**
  * systeminformation 获取系统的信息
@@ -75,3 +76,4 @@ new CpuMonitor(cpuLineChart).init();
 new MemoryMonitor(memLineChart, memDonut, swapDonut).init();
 new NetMonitor(netSpark).init();
 new DiskMonitor(diskDonut).init();
+new ProcessMonitor(processTable).init();

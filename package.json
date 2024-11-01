@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "npx tsc -w",
     "style": "prettier . --write"
   },
   "keywords": [],

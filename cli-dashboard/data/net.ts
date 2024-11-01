@@ -1,5 +1,6 @@
 import si from 'systeminformation';
 import contrib from 'blessed-contrib';
+import { formatBytesToReadable } from './../../utils/tool.js';
 
 // 定义图表组件类型
 type ChartType = contrib.Widgets.PictureElement;
@@ -60,42 +61,13 @@ class NetMonitor {
     this.netData.push(rx_sec);
 
     // 构建显示标签，包含当前接收速率和总接收量
-    const rx_label = `Receiving:      ${formatSize(rx_sec)}\nTotal received: ${formatSize(data['rx_bytes'])}`;
+    const rx_label = `Receiving:      ${formatBytesToReadable(rx_sec)}\nTotal received: ${formatBytesToReadable(data['rx_bytes'])}`;
 
     // 更新图表数据
     this.sparkline.setData([rx_label], [this.netData]);
     // 重新渲染屏幕
     this.sparkline.screen.render();
   }
-
-  clearTimer() {
-    if (this.interval) {
-      clearTimeout(this.interval);
-    }
-  }
-}
-
-/**
- * 格式化字节大小为人类可读格式
- * @param bytes 字节数
- * @returns 格式化后的字符串，如 "1.25 MB"
- */
-function formatSize(bytes: number) {
-  if (bytes == 0) {
-    return '0.00 B';
-  }
-
-  if (bytes < 1024) {
-    return Math.floor(bytes) + ' B';
-  }
-
-  let num = bytes / 1024;
-
-  if (num > 1024) {
-    return (num / 1024).toFixed(2) + ' MB';
-  }
-
-  return (num / 1024).toFixed(2) + ' KB';
 }
 
 export default NetMonitor;

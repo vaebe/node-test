@@ -1,8 +1,8 @@
-// 导入系统信息和UI组件库
-import si from 'systeminformation';
-import contrib from 'blessed-contrib';
+import si from 'systeminformation'; // 导入系统信息库
+import contrib from 'blessed-contrib'; // 导入终端UI组件库
+import { formatBytesToGB } from '../../utils/tool.js';
 
-// 定义图表使用的颜色数组
+// 定义图表颜色数组
 const colors = ['magenta', 'cyan', 'blue', 'yellow', 'green', 'red'];
 
 // 定义图表组件类型
@@ -10,7 +10,7 @@ type ChartType = contrib.Widgets.PictureElement;
 
 // 定义内存数据结构接口
 type MemData = {
-  title: string; // 数据标题
+  title: string; // 图表标题
   style: {
     line: string; // 线条颜色
   };
@@ -32,20 +32,19 @@ class MemoryMonitor {
     this.swapDonut = swapDonut;
   }
 
-  // 初始化监控器
   init() {
-    // 获取初始内存数据
+    // 初始化内存监控
     si.mem((data) => {
       // 初始化数据结构，包含内存和交换分区两组数据
       this.memData = [
         {
           title: 'Memory',
           style: { line: colors[0] },
-          // 创建60个点的X轴数据(60-1)
+          // 创建60个点的X轴数据，表示时间
           x: Array(60)
             .fill(0)
             .map((_, i) => 60 - i),
-          // 初始Y轴数据全部为0
+          // 初始化Y轴数据为0
           y: Array(60).fill(0)
         },
         {
@@ -60,7 +59,7 @@ class MemoryMonitor {
 
       this.updateData(data);
 
-      // 设置1秒间隔的数据更新定时器
+      // 每秒更新一次数据
       this.interval = setInterval(() => {
         si.mem((data) => {
           this.updateData(data);
@@ -69,7 +68,6 @@ class MemoryMonitor {
     });
   }
 
-  // 更新图表数据
   updateData(data: si.Systeminformation.MemData) {
     // 计算内存使用百分比
     let memPer = +(100 * (1 - data.available / data.total)).toFixed();
@@ -79,8 +77,7 @@ class MemoryMonitor {
     // 处理交换分区不存在的情况
     swapPer = isNaN(swapPer) ? 0 : swapPer;
 
-    // 更新折线图数据
-    // 移除最老的数据点并添加新数据点
+    // 更新折线图数据，移除最老的数据点，添加新的数据点
     this.memData[0].y.shift();
     this.memData[0].y.push(memPer);
 
@@ -94,7 +91,7 @@ class MemoryMonitor {
     this.memDonut.setData([
       {
         percent: memPer / 100,
-        label: '',
+        label: `${formatBytesToGB(data.total - data.available)} of ${formatBytesToGB(data.total)}`,
         color: colors[0]
       }
     ]);
@@ -103,19 +100,13 @@ class MemoryMonitor {
     this.swapDonut.setData([
       {
         percent: swapPer / 100,
-        label: '',
+        label: `${formatBytesToGB(data.swapused)} of ${formatBytesToGB(data.swaptotal)}`,
         color: colors[1]
       }
     ]);
 
     // 重新渲染屏幕
     this.lineChart.screen.render();
-  }
-
-  clearTimer() {
-    if (this.interval) {
-      clearTimeout(this.interval);
-    }
   }
 }
 

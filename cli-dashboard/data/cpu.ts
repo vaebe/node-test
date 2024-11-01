@@ -75,12 +75,6 @@ class CpuMonitor {
     this.lineChart.setData(this.cpuData);
     this.lineChart.screen.render();
   }
-
-  clearTimer() {
-    if (this.interval) {
-      clearTimeout(this.interval);
-    }
-  }
 }
 
 export default CpuMonitor;

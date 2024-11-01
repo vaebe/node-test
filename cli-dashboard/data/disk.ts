@@ -1,6 +1,7 @@
 import si from 'systeminformation';
 import contrib from 'blessed-contrib';
 import { clearTimeout } from 'timers';
+import { formatBytesToGB } from '../../utils/tool.js';
 
 type ChartType = contrib.Widgets.PictureElement;
 
@@ -30,12 +31,10 @@ class DiskMonitor {
   updateData(data: FsSizeData[]) {
     const disk = data[0];
 
-    const label = formatSize(disk.used) + ' of ' + formatSize(disk.size);
-
     this.donut.setData([
       {
         percent: disk.use / 100,
-        label: label,
+        label: `${formatBytesToGB(disk.used)} of ${formatBytesToGB(disk.size)}`,
         color: 'green'
       }
     ]);
@@ -47,10 +46,6 @@ class DiskMonitor {
       clearTimeout(this.interval);
     }
   }
-}
-
-function formatSize(bytes: number) {
-  return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB';
 }
 
 export default DiskMonitor;

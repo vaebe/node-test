@@ -7,17 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-auto-imports.d.ts
-components.d.ts
-
 node_modules
 dist
-dev-dist
+dist-ssr
 *.local
-stats.html
-ca
 
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -25,5 +22,3 @@ ca
 *.njsproj
 *.sln
 *.sw?
-*.js
-!**/template-*/**

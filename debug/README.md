@@ -1,5 +1,6 @@
 node js 调试练习
 
+## nodejs
 ```json
 {
   // 使用 IntelliSense 了解相关属性。 
@@ -47,5 +48,26 @@ node js 调试练习
        "type": "node"
     }
   ]
+}
+```
+
+## 调试 ts 应用
+
+需要在 `tsconfig.json` 中增加 `"sourceMap": true` 生成 `*.js.map` 文件
+
+```json
+{
+  "name": "调试 ts 应用",
+  "request": "launch",
+  "runtimeArgs": [ // 运行时参数
+    "./debug/add.js",
+  ],
+  "runtimeExecutable": "node",
+  "presentation":{ 
+    "hidden": false,
+    "group": "调试 node 2",
+    "order": 1
+  },
+    "type": "node"
 }
 ```

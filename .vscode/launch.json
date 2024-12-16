@@ -31,12 +31,13 @@
       "type": "node"
     },
     {
-      "name": "调试 node1 程序",
+      "name": "调试 ts 应用",
       "request": "launch",
       "runtimeArgs": [ // 运行时参数
-        "./debug/inde.js",
+        "./debug/add.js",
       ],
-      "presentation":{
+      "runtimeExecutable": "node",
+      "presentation":{ 
         "hidden": false,
         "group": "调试 node 2",
         "order": 1

@@ -26,5 +26,6 @@ ca
 *.sln
 *.sw?
 *.js
+*.map
 !**/template-*/**
 !debug/inde.js

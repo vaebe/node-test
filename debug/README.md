@@ -55,11 +55,14 @@ node js 调试练习
 
 需要在 `tsconfig.json` 中增加 `"sourceMap": true` 生成 `*.js.map` 文件
 
+`node --enable-source-maps ./dist/index.js` `--enable-source-maps` 参数：启用源码映射功能，启用该参数后，Node.js 在运行编译后的代码时，会尝试加载并使用 .map 文件，将错误堆栈信息、调试信息等映射回原始的源代码，而不是编译后的代码。
+
 ```json
 {
   "name": "调试 ts 应用",
   "request": "launch",
   "runtimeArgs": [ // 运行时参数
+    "--enable-source-maps",
     "./debug/add.js",
   ],
   "runtimeExecutable": "node",

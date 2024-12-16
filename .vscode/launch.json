@@ -34,6 +34,7 @@
       "name": "调试 ts 应用",
       "request": "launch",
       "runtimeArgs": [ // 运行时参数
+        "--enable-source-maps",
         "./debug/add.js",
       ],
       "runtimeExecutable": "node",

@@ -27,3 +27,4 @@ ca
 *.sw?
 *.js
 !**/template-*/**
+!debug/inde.js
